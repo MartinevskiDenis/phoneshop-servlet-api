@@ -9,16 +9,28 @@ import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertEquals;
 
 public class ArrayListProductDaoTest {
+    private static final String TEST_PRODUCT_CODE = "test-product1";
+    private static final String TEST_PRODUCT_DESCRIPTION = "Test Product 1";
+    private static final BigDecimal TEST_PRODUCT_PRICE = new BigDecimal(100);
+    private static final Currency TEST_PRODUCT_CURRENCY = Currency.getInstance("USD");
+    private static final int TEST_PRODUCT_STOCK = 100;
+    private static final String TEST_PRODUCT_IMAGE_URL = "https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer/Samsung/Samsung%20Galaxy%20S.jpg";
+    private static final int NEW_STOCK = 10;
+    private static final Long ID_PRODUCT_TO_UPDATE = 0L;
+    private static final Long ID_PRODUCT_TO_DELETE = 1L;
+    private static final Long ID_PRODUCT_TO_FIND = 2L;
+    private static final Long ID_PRODUCT_NOT_FIND = -1L;
+    private static final int CNT_UNSUITABLE_PRODUCTS = 3;
     private ProductDao productDao;
-    private Currency usd;
 
     @Before
     public void setup() {
         productDao = new ArrayListProductDao();
-        usd = Currency.getInstance("USD");
     }
 
     @Test(expected = NullPointerException.class)
@@ -28,7 +40,7 @@ public class ArrayListProductDaoTest {
 
     @Test
     public void shouldSaveNewProduct() {
-        Product product = new Product("test-product1", "Test Product 1", new BigDecimal(100), usd, 100, "https://raw.githubusercontent.com/andrewosipenko/phoneshop-ext-images/master/manufacturer/Samsung/Samsung%20Galaxy%20S.jpg");
+        Product product = new Product(TEST_PRODUCT_CODE, TEST_PRODUCT_DESCRIPTION, TEST_PRODUCT_PRICE, TEST_PRODUCT_CURRENCY, TEST_PRODUCT_STOCK, TEST_PRODUCT_IMAGE_URL);
 
         productDao.save(product);
 
@@ -38,22 +50,20 @@ public class ArrayListProductDaoTest {
 
     @Test
     public void shouldUpdateProduct() {
-        int newStock = 10;
-        Long productId = 0L;
         Product product = productDao.getProducts().stream()
-                .filter(p -> productId.equals(p.getId()))
+                .filter(p -> ID_PRODUCT_TO_UPDATE.equals(p.getId()))
                 .findAny()
                 .get();
 
-        product.setStock(newStock);
+        product.setStock(NEW_STOCK);
         productDao.save(product);
 
-        assertEquals(productId, product.getId());
+        assertEquals(ID_PRODUCT_TO_UPDATE, product.getId());
         Product updatedProduct = productDao.getProducts().stream()
-                .filter(p -> productId.equals(p.getId()))
+                .filter(p -> ID_PRODUCT_TO_UPDATE.equals(p.getId()))
                 .findAny()
                 .get();
-        assertEquals(newStock, updatedProduct.getStock());
+        assertEquals(NEW_STOCK, updatedProduct.getStock());
     }
 
     @Test(expected = NullPointerException.class)
@@ -63,12 +73,10 @@ public class ArrayListProductDaoTest {
 
     @Test
     public void shouldDeleteProduct() {
-        Long id = 1L;
-
-        productDao.delete(id);
+        productDao.delete(ID_PRODUCT_TO_DELETE);
 
         List<Product> products = productDao.getProducts().stream()
-                .filter(p -> id.equals(p.getId()))
+                .filter(p -> ID_PRODUCT_TO_DELETE.equals(p.getId()))
                 .collect(Collectors.toList());
         assertTrue(products.isEmpty());
     }
@@ -80,16 +88,14 @@ public class ArrayListProductDaoTest {
 
     @Test(expected = NoSuchElementException.class)
     public void shouldThrowExceptionWhenNoProduct() {
-        productDao.getProduct(-1L);
+        productDao.getProduct(ID_PRODUCT_NOT_FIND);
     }
 
     @Test
     public void shouldFindProduct() {
-        Long id = 2L;
+        Product product = productDao.getProduct(ID_PRODUCT_TO_FIND);
 
-        Product product = productDao.getProduct(id);
-
-        assertEquals(id, product.getId());
+        assertEquals(ID_PRODUCT_TO_FIND, product.getId());
     }
 
     @Test
@@ -98,6 +104,6 @@ public class ArrayListProductDaoTest {
 
         List<Product> products = productDao.findProducts();
 
-        assertEquals((allProducts.size() - 3), products.size());
+        assertEquals((allProducts.size() - CNT_UNSUITABLE_PRODUCTS), products.size());
     }
 }

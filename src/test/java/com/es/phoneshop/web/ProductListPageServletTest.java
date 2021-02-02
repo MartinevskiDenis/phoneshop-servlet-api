@@ -13,12 +13,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductListPageServletTest {
+    private static final String REQUEST_ATTRIBUTE = "products";
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -47,6 +50,6 @@ public class ProductListPageServletTest {
     public void shouldContainsProductsInRequest() throws ServletException, IOException {
         servlet.doGet(request, response);
 
-        verify(request).setAttribute(eq("products"), any());
+        verify(request).setAttribute(eq(REQUEST_ATTRIBUTE), any());
     }
 }
