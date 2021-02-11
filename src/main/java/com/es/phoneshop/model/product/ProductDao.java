@@ -4,8 +4,10 @@ import java.util.List;
 
 public interface ProductDao {
     Product getProduct(Long id);
-    List<Product> findProducts();
+
     List<Product> getProducts();
+
     void save(Product product);
+
     void delete(Long id);
 }
