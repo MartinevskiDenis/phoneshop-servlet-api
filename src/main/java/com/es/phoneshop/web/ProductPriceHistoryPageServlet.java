@@ -30,9 +30,13 @@ public class ProductPriceHistoryPageServlet extends HttpServlet {
         } catch (NoSuchElementException e) {
             request.setAttribute(Constants.PRODUCT_ID_ATTRIBUTE_NAME, productId);
             pagePath = Constants.PRODUCT_NOT_FOUND_PAGE_PATH;
-        } catch (NumberFormatException e) {
+        } catch (NumberFormatException | NullPointerException e) {
             pagePath = Constants.ERROR_PAGE_PATH;
         }
         request.getRequestDispatcher(pagePath).forward(request, response);
+    }
+
+    public void setProductService(ProductService productService) {
+        this.productService = productService;
     }
 }

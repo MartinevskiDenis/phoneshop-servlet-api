@@ -26,12 +26,6 @@ public class ProductService {
         return productDao.getProduct(id);
     }
 
-    public List<Product> getProducts() {
-        if (productDao == null)
-            throw new NullPointerException();
-        return productDao.getProducts();
-    }
-
     public void save(Product product) throws NullPointerException {
         if ((productDao == null) || (product == null))
             throw new NullPointerException();

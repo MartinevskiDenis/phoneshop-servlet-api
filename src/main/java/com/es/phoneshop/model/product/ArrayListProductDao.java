@@ -23,6 +23,16 @@ public class ArrayListProductDao implements ProductDao {
         return SingletonInstance.INSTANCE;
     }
 
+    public void setProducts(List<Product> products, long nextId) {
+        readWriteLock.writeLock().lock();
+        try {
+            this.products.addAll(products);
+            this.nextId = nextId;
+        } finally {
+            readWriteLock.writeLock().unlock();
+        }
+    }
+
     @Override
     public List<Product> getProducts() {
         readWriteLock.readLock().lock();
