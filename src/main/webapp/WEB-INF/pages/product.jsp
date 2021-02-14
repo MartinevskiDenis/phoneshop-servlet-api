@@ -21,7 +21,35 @@
       </tr>
       <tr>
         <td>Price</td>
-          <td><a href="${pageContext.servletContext.contextPath}/pricehistory/${product.id}"><fmt:formatNumber value="${product.price}" type="currency" currencySymbol="${product.currency.symbol}"/></a></td>
+        <td class="price">
+            <div class="popup" onclick="showPriceHistory(${product.id})">
+                <fmt:formatNumber value="${product.price}" type="currency" currencySymbol="${product.currency.symbol}"/>
+                <span class="popuptext" id="myPopup${product.id}">
+              <h2>Price history</h2>
+              <h3>${product.description}</h3>
+              <table class="noBorder" style="color: #fff;" align="center">
+                <thead>
+                  <tr>
+                      <td><b>Start date</b></td>
+                      <td><b>Price</b></td>
+                  </tr>
+                </thead>
+                <c:forEach var="priceHistory" items="${product.priceHistories}">
+                  <tr>
+                    <td><fmt:formatDate value="${priceHistory.date}"/></td>
+                    <td class="price"><fmt:formatNumber value="${priceHistory.price}" type="currency" currencySymbol="${product.currency.symbol}"/></td>
+                  </tr>
+                </c:forEach>
+              </table>
+            </span>
+            </div>
+        </td>
       </tr>
   </table>
+    <script>
+        function showPriceHistory(productId) {
+            var popup = document.getElementById("myPopup" + productId);
+            popup.classList.toggle("show");
+        }
+    </script>
 </tags:master>

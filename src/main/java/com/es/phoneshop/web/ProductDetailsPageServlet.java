@@ -1,7 +1,7 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.model.product.ArrayListProductDao;
-import com.es.phoneshop.model.product.ProductService;
+import com.es.phoneshop.service.product.ArrayListProductService;
+import com.es.phoneshop.service.product.ProductService;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -17,7 +17,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
     @Override
     public void init(ServletConfig config) throws ServletException {
         super.init(config);
-        productService = new ProductService(ArrayListProductDao.getInstance());
+        productService = ArrayListProductService.getInstance();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class ProductDetailsPageServlet extends HttpServlet {
         request.getRequestDispatcher(pagePath).forward(request, response);
     }
 
-    public void setProductService(ProductService productService) {
+    void setProductService(ProductService productService) {
         this.productService = productService;
     }
 }

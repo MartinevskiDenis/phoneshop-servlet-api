@@ -1,5 +1,7 @@
-package com.es.phoneshop.model.product;
+package com.es.phoneshop.constants;
 
+import com.es.phoneshop.model.product.PriceHistory;
+import com.es.phoneshop.model.product.Product;
 import com.es.phoneshop.web.Constants;
 
 import java.math.BigDecimal;

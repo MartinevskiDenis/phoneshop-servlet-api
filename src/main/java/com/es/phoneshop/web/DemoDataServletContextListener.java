@@ -1,6 +1,9 @@
 package com.es.phoneshop.web;
 
-import com.es.phoneshop.model.product.*;
+import com.es.phoneshop.model.product.PriceHistory;
+import com.es.phoneshop.model.product.Product;
+import com.es.phoneshop.service.product.ArrayListProductService;
+import com.es.phoneshop.service.product.ProductService;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -14,7 +17,7 @@ public class DemoDataServletContextListener implements ServletContextListener {
     private final ProductService productService;
 
     public DemoDataServletContextListener() {
-        this.productService = new ProductService(ArrayListProductDao.getInstance());
+        this.productService = ArrayListProductService.getInstance();
     }
 
     @Override

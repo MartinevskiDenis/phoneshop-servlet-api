@@ -1,11 +1,11 @@
 package com.es.phoneshop.web;
 
+import com.es.phoneshop.constants.TestServletConstants;
 import com.es.phoneshop.model.product.Product;
-import com.es.phoneshop.model.product.ProductService;
+import com.es.phoneshop.service.product.ProductService;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -17,7 +17,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.NoSuchElementException;
 
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.ArgumentMatchers.eq;

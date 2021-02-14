@@ -12,8 +12,7 @@ public class PriceHistory {
         this.date = date;
     }
 
-    public PriceHistory() {
-    }
+    public PriceHistory() {}
 
     public BigDecimal getPrice() {
         return price;

@@ -1,5 +1,11 @@
-package com.es.phoneshop.model.product;
+package com.es.phoneshop.service.product;
 
+import com.es.phoneshop.constants.TestProductConstants;
+import com.es.phoneshop.dao.product.ProductDao;
+import com.es.phoneshop.model.enums.SortField;
+import com.es.phoneshop.model.enums.SortOrder;
+import com.es.phoneshop.model.product.PriceHistory;
+import com.es.phoneshop.model.product.Product;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,14 +27,15 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProductServiceTest {
+public class ArrayListProductServiceTest {
     @Mock
     private ProductDao productDao;
-    private ProductService productService;
+    private ArrayListProductService productService;
 
     @Before
     public void setup() {
-        productService = new ProductService(productDao);
+        productService = ArrayListProductService.getInstance();
+        productService.setProductDao(productDao);
         when(productDao.getProduct(any())).thenReturn(new Product());
         doNothing().when(productDao).delete(any());
         doNothing().when(productDao).save(any());
