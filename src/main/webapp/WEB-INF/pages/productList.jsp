@@ -9,6 +9,10 @@
     Welcome to Expert-Soft training!
   </p>
   <form>
+    <c:if test="${not empty param.field and not empty param.order}">
+      <input type="hidden" name="field" value="${param.field}">
+      <input type="hidden" name="order" value="${param.order}">
+    </c:if>
     <input type="text" placeholder="Find products" name="query" value="${param.query}">
     <button type="submit">Search</button>
   </form>
