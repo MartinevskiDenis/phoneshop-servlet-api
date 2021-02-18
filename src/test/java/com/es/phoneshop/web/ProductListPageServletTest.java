@@ -1,5 +1,6 @@
 package com.es.phoneshop.web;
 
+import com.es.phoneshop.constants.TestServletConstants;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +22,6 @@ import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProductListPageServletTest {
-    private static final String REQUEST_ATTRIBUTE = "products";
     @Mock
     private HttpServletRequest request;
     @Mock
@@ -40,16 +40,10 @@ public class ProductListPageServletTest {
     }
 
     @Test
-    public void testDoGet() throws ServletException, IOException {
+    public void shouldDoGet() throws ServletException, IOException {
         servlet.doGet(request, response);
 
+        verify(request).setAttribute(eq(TestServletConstants.PRODUCTS_ATTRIBUTE), any());
         verify(requestDispatcher).forward(request, response);
-    }
-
-    @Test
-    public void shouldContainsProductsInRequest() throws ServletException, IOException {
-        servlet.doGet(request, response);
-
-        verify(request).setAttribute(eq(REQUEST_ATTRIBUTE), any());
     }
 }
