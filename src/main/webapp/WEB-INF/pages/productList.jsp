@@ -8,6 +8,7 @@
   <p>
     Welcome to Expert-Soft training!
   </p>
+  <h3><a href="${pageContext.servletContext.contextPath}/search">Advanced search</a></h3>
   <form>
     <c:if test="${not empty param.field and not empty param.order}">
       <input type="hidden" name="field" value="${param.field}">
